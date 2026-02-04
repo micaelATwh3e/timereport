@@ -19,7 +19,7 @@ msgid "Time Tracking"
 msgstr "Tidrapportering"
 
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Översikt"
 
 msgid "Projects"
 msgstr "Projekt"
@@ -405,3 +405,12 @@ msgstr "November"
 
 msgid "December"
 msgstr "December"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Comp time"
+msgstr "Restid"
+
+msgid "Total hours"
+msgstr "Totala timmar"

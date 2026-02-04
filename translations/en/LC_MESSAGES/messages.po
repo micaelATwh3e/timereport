@@ -405,3 +405,12 @@ msgstr "November"
 
 msgid "December"
 msgstr "December"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Comp time"
+msgstr "Comp time"
+
+msgid "Total hours"
+msgstr "Total hours"
