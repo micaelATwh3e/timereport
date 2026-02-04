@@ -405,3 +405,15 @@ msgstr "November"
 
 msgid "December"
 msgstr "December"
+
+msgid "Time report"
+msgstr "Tidrapport"
+
+msgid "Employee"
+msgstr "Anställd"
+
+msgid "Print"
+msgstr "Skriv ut"
+
+msgid "Signature"
+msgstr "Signatur"
