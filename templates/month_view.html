@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}{{ month_name }} {{ year }}{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>{{ month_name }} {{ year }}</h2>
+    <div>
+        {% if month > 1 %}
+            <a href="{{ url_for('month_view', year=year, month=month-1) }}" class="btn btn-secondary">← Föregående</a>
+        {% else %}
+            <a href="{{ url_for('month_view', year=year-1, month=12) }}" class="btn btn-secondary">← Föregående</a>
+        {% endif %}
+        
+        {% if month < 12 %}
+            <a href="{{ url_for('month_view', year=year, month=month+1) }}" class="btn btn-secondary">Nästa →</a>
+        {% else %}
+            <a href="{{ url_for('month_view', year=year+1, month=1) }}" class="btn btn-secondary">Nästa →</a>
+        {% endif %}
+    </div>
+</div>
+
+<div style="overflow-x: auto;">
+    <table>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Veckodag</th>
+                {% for project in projects %}
+                <th>{{ project.name }}</th>
+                {% endfor %}
+                <th>Restid</th>
+                <th>Totalt timmar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day in month_data %}
+            <tr class="{% if day.is_holiday %}holiday{% elif day.is_weekend %}weekend{% elif day.leave and day.leave.leave_type == 'vacation' %}leave-vacation{% elif day.leave and day.leave.leave_type == 'sickness' %}leave-sickness{% endif %}">
+                <td>{{ day.date.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    {{ day.weekday }}
+                    {% if day.leave %}
+                        <br><small style="color: #666;">
+                            {% if day.leave.leave_type == 'vacation' %}🏖️ Semester{% else %}🤒 Sjuk{% endif %}
+                        </small>
+                    {% endif %}
+                </td>
+                {% for project in projects %}
+                <td>
+                    <input type="number" 
+                           class="time-input" 
+                           data-date="{{ day.date.strftime('%Y-%m-%d') }}"
+                           data-project="{{ project.id }}"
+                           value="{% if day.project_hours[project.id] %}{{ day.project_hours[project.id] }}{% endif %}"
+                           min="0"
+                           max="24"
+                           step="0.5"
+                           onchange="updateTimeEntry(this)">
+                </td>
+                {% endfor %}
+                <td>
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                        <input type="number" 
+                               class="time-input" 
+                               data-date="{{ day.date.strftime('%Y-%m-%d') }}"
+                               data-restid="true"
+                               value="{% if day.restid_hours %}{{ day.restid_hours }}{% endif %}"
+                               min="0"
+                               max="24"
+                               step="0.5"
+                               onchange="updateTimeEntry(this)">
+                        <input type="checkbox" 
+                               class="tracktamente-check"
+                               data-date="{{ day.date.strftime('%Y-%m-%d') }}"
+                               title="Tracktamente"
+                               style="width: auto; cursor: pointer;"
+                               onchange="updateTracktamente(this)"
+                               {% if day.restid_tracktamente %}checked{% endif %}>
+                    </div>
+                </td>
+                <td style="text-align: center; font-weight: bold;">{{ day.total }}</td>
+            </tr>
+            {% endfor %}
+            
+            <tr class="summary-row">
+                <td colspan="2">Totalt ({{ working_days }} arbetsdagar)</td>
+                {% for project in projects %}
+                <td style="text-align: center;">{{ project_totals[project.id] }}</td>
+                {% endfor %}
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">{{ total_hours }}</td>
+            </tr>
+            
+            <tr style="font-style: italic;">
+                <td colspan="2">Behövd arbetstid ({{ working_days }} × 8h)</td>
+                <td colspan="{{ projects|length + 1 }}" style="text-align: center;">{{ required_hours }}h</td>
+            </tr>
+            
+            <tr style="font-weight: bold; background: {% if difference >= 0 %}#d4edda{% else %}#f8d7da{% endif %};">
+                <td colspan="2">Differens</td>
+                <td colspan="{{ projects|length + 1 }}" style="text-align: center;">
+                    {{ "%.1f"|format(difference) }}h
+                    {% if difference >= 0 %}✓{% else %}⚠️{% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="margin-top: 30px; padding: 20px; background: #fafafa; border: 1px solid #ddd;">
+    <h3>Förklaring:</h3>
+    <ul style="list-style: none; padding-left: 0;">
+        <li style="padding: 5px;"><span style="background: #ffe5e5; padding: 3px 12px; border: 1px solid #ddd;">■</span> Röd dag / Helgdag</li>
+        <li style="padding: 5px;"><span style="background: #fffacd; padding: 3px 12px; border: 1px solid #ddd;">■</span> Helg (Lördag/Söndag)</li>
+        <li style="padding: 5px;"><span style="background: #e3f2fd; padding: 3px 12px; border: 1px solid #ddd;">■</span> Semester</li>
+        <li style="padding: 5px;"><span style="background: #fff3e0; padding: 3px 12px; border: 1px solid #ddd;">■</span> Sjukdom</li>
+    </ul>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function updateTimeEntry(input) {
+    const date = input.dataset.date;
+    const isRestid = input.dataset.restid === 'true';
+    const projectId = input.dataset.project;
+    const hours = parseFloat(input.value) || 0;
+    
+    const payload = {
+        date: date,
+        hours: hours,
+        is_restid: isRestid
+    };
+    
+    if (!isRestid) {
+        payload.project_id = projectId;
+    }
+    
+    fetch('/add_time_entry', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    });
+}
+
+function updateTracktamente(input) {
+    const date = input.dataset.date;
+    const isChecked = input.checked;
+    
+    // Get the restid hours from the input field next to this checkbox
+    const restidInput = input.closest('div').querySelector('input[type="number"]');
+    const hours = parseFloat(restidInput.value) || 0;
+    
+    fetch('/add_time_entry', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            date: date,
+            hours: hours,
+            is_restid: true,
+            tracktamente: isChecked
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Success - don't reload, just show feedback
+            console.log('Tracktamente updated');
+        }
+    });
+}
+</script>
+{% endblock %}

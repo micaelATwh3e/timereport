@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+
+{% block title %}Rapporter{% endblock %}
+
+{% block content %}
+<h2>Rapporter för {{ year }}</h2>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px;">
+    <div>
+        <h3>Timmar per projekt</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Projekt</th>
+                    <th>Totalt timmar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project_name, total_hours in project_summary %}
+                <tr>
+                    <td><strong>{{ project_name }}</strong></td>
+                    <td style="text-align: center;">{{ "%.1f"|format(total_hours) }}h</td>
+                </tr>
+                {% endfor %}
+                {% if not project_summary %}
+                <tr>
+                    <td colspan="2" style="text-align: center; color: #999;">Ingen tid registrerad än</td>
+                </tr>
+                {% endif %}
+            </tbody>
+            <tfoot>
+                <tr class="summary-row">
+                    <td>Totalt</td>
+                    <td style="text-align: center;">
+                        {{ "%.1f"|format(project_summary|sum(attribute='1')) }}h
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    
+    <div>
+        <h3>Frånvaro</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Typ</th>
+                    <th>Antal perioder</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leave_type, count in leave_summary %}
+                <tr>
+                    <td>
+                        {% if leave_type == 'vacation' %}
+                            🏖️ Semester
+                        {% else %}
+                            🤒 Sjukdom
+                        {% endif %}
+                    </td>
+                    <td style="text-align: center;">{{ count }}</td>
+                </tr>
+                {% endfor %}
+                {% if not leave_summary %}
+                <tr>
+                    <td colspan="2" style="text-align: center; color: #999;">Ingen frånvaro registrerad</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div style="margin-top: 40px; padding: 25px; background: #fafafa; border: 1px solid #ddd;">
+    <h3>Sammanfattning</h3>
+    <ul style="list-style: none; padding-left: 0;">
+        <li style="padding: 10px; border-bottom: 1px solid #ddd;">
+            <strong>Totalt antal arbetade timmar:</strong> 
+            {{ "%.1f"|format(project_summary|sum(attribute='1')) }}h
+        </li>
+        <li style="padding: 10px; border-bottom: 1px solid #ddd;">
+            <strong>Semesterperioder:</strong> 
+            {{ leave_summary|selectattr('0', 'equalto', 'vacation')|map(attribute='1')|sum or 0 }}
+        </li>
+        <li style="padding: 10px; border-bottom: 1px solid #ddd;">
+            <strong>Sjukperioder:</strong> 
+            {{ leave_summary|selectattr('0', 'equalto', 'sickness')|map(attribute='1')|sum or 0 }}
+        </li>
+        <li style="padding: 10px; border-bottom: 1px solid #ddd;">
+            <strong>Dagar med tracktamente:</strong> 
+            {{ tracktamente_count }}
+        </li>
+        <li style="padding: 10px;">
+            <strong>Restid (resor):</strong> 
+            {{ "%.1f"|format(travel_time) }}h
+        </li>
+    </ul>
+</div>
+
+<div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+    <div>
+        <h3>Månadssummering (senaste 12 månader)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Månad</th>
+                    <th>Arbetsdagar</th>
+                    <th>Semesterdagar</th>
+                    <th>Mål (timmar)</th>
+                    <th>Faktiskt (timmar)</th>
+                    <th>Uppfyllelse %</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for month, total in monthly_totals.items()|sort(reverse=True) %}
+                <tr>
+                    <td>{{ month }}</td>
+                    <td style="text-align: center;">{{ monthly_working_days.get(month, 0) }}</td>
+                    <td style="text-align: center;">{{ monthly_vacation_days.get(month, 0) }}</td>
+                    <td style="text-align: center;">{{ monthly_target_hours.get(month, 0)|int }}</td>
+                    <td style="text-align: center;">{{ "%.1f"|format(total) }}h</td>
+                    <td style="text-align: center;">{{ monthly_percentages[month] }}%</td>
+                </tr>
+                {% endfor %}
+                {% if not monthly_totals %}
+                <tr>
+                    <td colspan="6" style="text-align: center; color: #999;">Ingen data än</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h3>Årssummering (senaste 5 år)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>År</th>
+                    <th>Totalt timmar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for year_label, total in yearly_totals.items() %}
+                <tr>
+                    <td>{{ year_label }}</td>
+                    <td style="text-align: center;">{{ "%.1f"|format(total) }}h</td>
+                </tr>
+                {% endfor %}
+                {% if not yearly_totals %}
+                <tr>
+                    <td colspan="2" style="text-align: center; color: #999;">Ingen data än</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div style="margin-top: 40px; display: grid; grid-template-columns: 1fr; gap: 30px;">
+    <div>
+        <h3>Månadvis projektuppfyllelse</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Månad</th>
+                    <th>Projekt</th>
+                    <th>Timmar</th>
+                    <th>Målprocent</th>
+                    <th>Behövd timmar</th>
+                    <th>Faktisk %</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for month in monthly_totals.keys()|sort|reverse %}
+                    {% set month_projects = monthly_project_map.get(month, {}) %}
+                    {% set month_total = monthly_totals[month] %}
+                    {% set month_targets = monthly_targets.get(month, {}) %}
+                    {% set month_target_hours_val = monthly_target_hours.get(month, 0) %}
+                    
+                    {% if month_projects %}
+                        {% for project in projects %}
+                            {% set hours = month_projects.get(project.name, 0) %}
+                            {% set target = month_targets.get(project.id) %}
+                            {% set actual_percent = (hours / month_target_hours_val * 100)|round(1) if month_target_hours_val > 0 else 0 %}
+                            {% set needed_hours = (month_target_hours_val * target / 100)|round(1) if target else 0 %}
+                            
+                            {% if hours > 0 or target %}
+                            <tr>
+                                <td>{{ month }}</td>
+                                <td>{{ project.name }}</td>
+                                <td style="text-align: center;">{{ "%.1f"|format(hours) }}h</td>
+                                <td style="text-align: center;">{% if target %}{{ target }}%{% else %}-{% endif %}</td>
+                                <td style="text-align: center;">{% if target %}{{ needed_hours }}h{% else %}-{% endif %}</td>
+                                <td style="text-align: center;">{{ actual_percent }}%</td>
+                                <td style="text-align: center;">
+                                    {% if target %}
+                                        {% if actual_percent >= target %}
+                                            <span style="color: #28a745;">✓ OK</span>
+                                        {% elif actual_percent >= target - 2 %}
+                                            <span style="color: #ffc107;">~ Nästan</span>
+                                        {% else %}
+                                            <span style="color: #dc3545;">✗ Under</span>
+                                        {% endif %}
+                                    {% else %}
+                                        <span style="color: #999;">-</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                {% if not monthly_totals %}
+                <tr>
+                    <td colspan="7" style="text-align: center; color: #999;">Ingen data än</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+    <div>
+        <h3>Projektandelar ({{ year }})</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Projekt</th>
+                    <th>Timmar</th>
+                    <th>Andel</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in project_percentages %}
+                <tr>
+                    <td><strong>{{ row.project }}</strong></td>
+                    <td style="text-align: center;">{{ "%.1f"|format(row.hours) }}h</td>
+                    <td style="text-align: center;">{{ row.percent }}%</td>
+                </tr>
+                {% endfor %}
+                {% if not project_percentages %}
+                <tr>
+                    <td colspan="3" style="text-align: center; color: #999;">Ingen data än</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h3>Grafer</h3>
+        <div style="background: #fafafa; border: 1px solid #ddd; padding: 20px;">
+            <canvas id="monthlyChart" height="140"></canvas>
+        </div>
+        <div style="background: #fafafa; border: 1px solid #ddd; padding: 20px; margin-top: 20px;">
+            <canvas id="projectShareChart" height="140"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const monthlyLabels = {{ monthly_totals.keys()|list|tojson }};
+const monthlyValues = {{ monthly_totals.values()|list|tojson }};
+
+const projectLabels = {{ project_percentages|map(attribute='project')|list|tojson }};
+const projectValues = {{ project_percentages|map(attribute='hours')|list|tojson }};
+
+if (monthlyLabels.length) {
+    new Chart(document.getElementById('monthlyChart'), {
+        type: 'bar',
+        data: {
+            labels: monthlyLabels,
+            datasets: [{
+                label: 'Timmar per månad',
+                data: monthlyValues,
+                backgroundColor: '#2c3e50'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+}
+
+if (projectLabels.length) {
+    new Chart(document.getElementById('projectShareChart'), {
+        type: 'doughnut',
+        data: {
+            labels: projectLabels,
+            datasets: [{
+                data: projectValues,
+                backgroundColor: ['#2c3e50', '#7f8c8d', '#95a5a6', '#bdc3c7', '#34495e']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+}
+</script>
+{% endblock %}

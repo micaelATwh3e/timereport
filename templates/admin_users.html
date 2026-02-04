@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Användarhantering{% endblock %}
+
+{% block content %}
+<h2>👤 Användarhantering</h2>
+
+<div style="background: #fafafa; padding: 25px; border: 1px solid #ddd; margin-bottom: 30px;">
+    <h3>Lägg till ny användare</h3>
+    <form method="POST" action="{{ url_for('admin_add_user') }}">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+                <label>Användarnamn</label>
+                <input type="text" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label>E-post</label>
+                <input type="email" name="email" required>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Lösenord</label>
+            <input type="password" name="password" required>
+        </div>
+        
+        <div class="form-group">
+            <label style="display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" name="is_admin" style="width: auto;">
+                Administratör
+            </label>
+        </div>
+        
+        <button type="submit" class="btn">Lägg till användare</button>
+    </form>
+</div>
+
+<h3>Alla användare</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Användarnamn</th>
+            <th>E-post</th>
+            <th>Roll</th>
+            <th>Åtgärder</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>
+                <strong>{{ user.username }}</strong>
+                {% if user.id == current_user.id %}
+                    <span style="color: #667eea; font-size: 12px;">(Du)</span>
+                {% endif %}
+            </td>
+            <td>{{ user.email }}</td>
+            <td>
+                {% if user.is_admin %}
+                    <span style="color: #dc3545; font-weight: bold;">👑 Administratör</span>
+                {% else %}
+                    <span style="color: #6c757d;">Användare</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if user.id != current_user.id %}
+                    <a href="{{ url_for('admin_toggle_admin', user_id=user.id) }}" class="btn btn-secondary" style="margin-right: 10px;">
+                        {% if user.is_admin %}Ta bort admin{% else %}Gör admin{% endif %}
+                    </a>
+                    <a href="{{ url_for('admin_delete_user', user_id=user.id) }}" 
+                       class="btn btn-danger"
+                       onclick="return confirm('Är du säker på att du vill ta bort användaren {{ user.username }}?')">
+                        Ta bort
+                    </a>
+                {% else %}
+                    <span style="color: #999; font-style: italic;">-</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div style="margin-top: 30px; padding: 20px; background: #fffbf0; border: 1px solid #e6d9a3;">
+    <strong>ℹ️ Information:</strong>
+    <ul style="margin-top: 10px; margin-left: 20px;">
+        <li>Endast administratörer kan lägga till och hantera användare</li>
+        <li>Du kan inte ta bort eller ändra din egen administratörsstatus</li>
+        <li>Nya användare måste skapas av en administratör</li>
+    </ul>
+</div>
+{% endblock %}

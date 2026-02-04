@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Målprocent per projekt{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>Målprocent per projekt</h2>
+    <div>
+        {% set current_year = year %}
+        {% set current_month = month %}
+        <form style="display: inline-flex; gap: 10px;" method="GET">
+            <select name="month" style="width: auto;">
+                <option value="1" {% if month == 1 %}selected{% endif %}>Januari</option>
+                <option value="2" {% if month == 2 %}selected{% endif %}>Februari</option>
+                <option value="3" {% if month == 3 %}selected{% endif %}>Mars</option>
+                <option value="4" {% if month == 4 %}selected{% endif %}>April</option>
+                <option value="5" {% if month == 5 %}selected{% endif %}>Maj</option>
+                <option value="6" {% if month == 6 %}selected{% endif %}>Juni</option>
+                <option value="7" {% if month == 7 %}selected{% endif %}>Juli</option>
+                <option value="8" {% if month == 8 %}selected{% endif %}>Augusti</option>
+                <option value="9" {% if month == 9 %}selected{% endif %}>September</option>
+                <option value="10" {% if month == 10 %}selected{% endif %}>Oktober</option>
+                <option value="11" {% if month == 11 %}selected{% endif %}>November</option>
+                <option value="12" {% if month == 12 %}selected{% endif %}>December</option>
+            </select>
+            <input type="number" name="year" value="{{ year }}" style="width: 80px;">
+            <button type="submit" class="btn">Visa</button>
+        </form>
+    </div>
+</div>
+
+<div style="background: #fafafa; padding: 25px; border: 1px solid #ddd; margin-bottom: 30px;">
+    <h3>Ställ in målprocent för {{ year }}-{% if month < 10 %}0{% endif %}{{ month }}</h3>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        {% for project in projects %}
+        <form method="POST" class="form-group">
+            <label>{{ project.name }}</label>
+            <input type="hidden" name="project_id" value="{{ project.id }}">
+            <div style="display: flex; gap: 10px;">
+                <input type="number" 
+                       name="target_percentage" 
+                       value="{{ target_map.get(project.id, {}).get('percentage', '') }}"
+                       min="0"
+                       max="100"
+                       step="0.1"
+                       placeholder="0-100%"
+                       style="flex: 1;">
+                <button type="submit" class="btn" style="width: auto;">Spara</button>
+            </div>
+        </form>
+        {% endfor %}
+    </div>
+</div>
+
+<h3>Aktiva målprocent för {{ year }}-{% if month < 10 %}0{% endif %}{{ month }}</h3>
+{% if targets %}
+<table>
+    <thead>
+        <tr>
+            <th>Projekt</th>
+            <th>Målprocent</th>
+            <th>Åtgärd</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for target in targets %}
+        <tr>
+            <td><strong>{{ target.project.name }}</strong></td>
+            <td style="text-align: center;">{{ target.target_percentage }}%</td>
+            <td>
+                <a href="{{ url_for('delete_target', target_id=target.id) }}" class="btn btn-danger">Ta bort</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p style="text-align: center; padding: 40px; color: #999;">Ingen målprocent satt för denna månad än.</p>
+{% endif %}
+{% endblock %}
