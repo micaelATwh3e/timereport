@@ -475,3 +475,15 @@ msgstr "Comp time"
 
 msgid "Total hours"
 msgstr "Total hours"
+
+msgid "Time report"
+msgstr "Time report"
+
+msgid "Employee"
+msgstr "Employee"
+
+msgid "Print"
+msgstr "Print"
+
+msgid "Signature"
+msgstr "Signature"

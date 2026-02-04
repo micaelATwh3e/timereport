@@ -475,3 +475,15 @@ msgstr "Restid"
 
 msgid "Total hours"
 msgstr "Totala timmar"
+
+msgid "Time report"
+msgstr "Tidrapport"
+
+msgid "Employee"
+msgstr "Anställd"
+
+msgid "Print"
+msgstr "Skriv ut"
+
+msgid "Signature"
+msgstr "Signatur"
