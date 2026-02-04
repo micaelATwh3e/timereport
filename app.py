@@ -779,13 +779,6 @@ if __name__ == '__main__':
                 db.session.commit()
                 print("User 'iwery' is now an admin!")
             
-            # Create default projects for iwery if they don't have any
-            if Project.query.filter_by(user_id=iwery.id).count() == 0:
-                xpm = Project(user_id=iwery.id, name='xPM', description='xPM projekt')
-                xonnectopia = Project(user_id=iwery.id, name='Xonnectopia', description='Xonnectopia projekt')
-                db.session.add(xpm)
-                db.session.add(xonnectopia)
-                db.session.commit()
-                print("Default projects created for iwery!")
+            pass
     
     app.run(debug=True, port=8777, host="0.0.0.0")

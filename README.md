@@ -33,7 +33,6 @@ python app.py
 ### Projects
 - Add and manage projects
 - Activate/deactivate projects
-- Default projects: xPM and Xonnectopia
 
 ### Time Reporting
 - Monthly view with all days
@@ -73,12 +72,6 @@ python app.py
 - Frontend: HTML, CSS, JavaScript
 - Authentication: Flask-Login
 - ORM: SQLAlchemy
-
-## Default Projects
-
-On first run, the following are created automatically:
-- xPM
-- Xonnectopia
 
 ## Swedish Holidays 2026
 
