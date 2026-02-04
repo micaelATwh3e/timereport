@@ -1,90 +1,90 @@
-# Tidrapporteringssystem
+# Time Reporting System
 
-Ett Flask-baserat webbsystem för tidrapportering med stöd för:
-- Användarhantering med inloggning
-- Projekt hantering
-- Tidrapportering per dag och projekt
-- Semester- och sjukdomsregistrering
-- Svenska helgdagar och helger
-- Månadsöversikter med arbetsdag-beräkningar
-- Rapporter och statistik
+A Flask-based web system for time reporting with support for:
+- User management with login
+- Project management
+- Time reporting per day and project
+- Vacation and sick leave registration
+- Swedish holidays and weekends
+- Monthly overviews with working-day calculations
+- Reports and statistics
 
 ## Installation
 
-1. Installera beroenden:
+1. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-2. Starta applikationen:
+2. Start the application:
 ```bash
 python app.py
 ```
 
-3. Öppna webbläsaren och gå till: `http://localhost:5000`
+3. Open your browser and go to: `http://localhost:5000`
 
-## Funktioner
+## Features
 
-### Användarhantering
-- Registrera nytt konto
-- Logga in/ut
-- Varje användare har sin egen tidrapportering
+### User Management
+- Register a new account
+- Log in/out
+- Each user has their own time reporting
 
-### Projekt
-- Lägg till och hantera projekt
-- Aktivera/inaktivera projekt
-- Standard projekt: xPM och Xonnectopia
+### Projects
+- Add and manage projects
+- Activate/deactivate projects
+- Default projects: xPM and Xonnectopia
 
-### Tidrapportering
-- Månadsvy med alla dagar
-- Lägg in timmar per projekt och dag
-- Automatisk beräkning av totalt arbetade timmar
-- Visar arbetsdagar, behövd arbetstid och differens
-- Färgkodning:
-  - Röd: Helgdagar
-  - Gul: Helger (lördag/söndag)
-  - Blå: Semester
-  - Orange: Sjukdom
+### Time Reporting
+- Monthly view with all days
+- Enter hours per project and day
+- Automatic calculation of total worked hours
+- Shows working days, required working hours, and difference
+- Color coding:
+  - Red: Holidays
+  - Yellow: Weekends (Saturday/Sunday)
+  - Blue: Vacation
+  - Orange: Sick leave
 
-### Frånvaro
-- Registrera semesterperioder
-- Registrera sjukdomsperioder
-- Visa alla registrerade frånvaroperioder
-- Automatisk markering i månadsvyn
+### Leave
+- Register vacation periods
+- Register sick leave periods
+- View all registered leave periods
+- Automatic marking in the monthly view
 
-### Rapporter
-- Sammanställning av timmar per projekt
-- Översikt över semester och sjukdom
-- Årlig statistik
+### Reports
+- Summary of hours per project
+- Overview of vacation and sick leave
+- Annual statistics
 
-## Användning
+## Usage
 
-1. **Första gången**: Registrera ett konto
-2. **Logga in** med ditt användarnamn och lösenord
-3. **Projekt**: Lägg till eller hantera projekt
-4. **Dashboard**: Navigera till aktuell månad och fyll i arbetade timmar
-5. **Frånvaro**: Registrera semester eller sjukdom
-6. **Rapporter**: Se sammanfattningar och statistik
+1. **First time**: Register an account
+2. **Log in** with your username and password
+3. **Projects**: Add or manage projects
+4. **Dashboard**: Navigate to the current month and fill in worked hours
+5. **Leave**: Register vacation or sick leave
+6. **Reports**: View summaries and statistics
 
-## Teknisk information
+## Technical Information
 
 - Backend: Flask (Python)
-- Databas: SQLite
+- Database: SQLite
 - Frontend: HTML, CSS, JavaScript
-- Autentisering: Flask-Login
+- Authentication: Flask-Login
 - ORM: SQLAlchemy
 
-## Standardprojekt
+## Default Projects
 
-Vid första körningen skapas automatiskt:
+On first run, the following are created automatically:
 - xPM
 - Xonnectopia
 
-## Svenska helgdagar 2026
+## Swedish Holidays 2026
 
-Systemet inkluderar alla svenska helgdagar för 2026:
-- Nyårsdagen, Trettondedag jul
-- Långfredagen, Påskhelgen
-- Första maj, Kristi himmelfärd, Pingst
-- Nationaldagen, Midsommarafton
-- Julhelgen, Nyårsafton
+The system includes all Swedish holidays for 2026:
+- New Year's Day, Epiphany
+- Good Friday, Easter weekend
+- May Day, Ascension Day, Pentecost
+- National Day, Midsummer Eve
+- Christmas holidays, New Year's Eve
