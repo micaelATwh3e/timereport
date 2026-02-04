@@ -1,27 +1,32 @@
 {% extends "base.html" %}
 
-{% block title %}Logga in{% endblock %}
+{% block title %}{{ _('Login') }}{% endblock %}
 
 {% block content %}
 <div style="max-width: 420px; margin: 80px auto; padding: 40px; border: 1px solid #ddd; background: #fafafa;">
-    <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50;">Logga in</h2>
+    <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50;">{{ _('Login') }}</h2>
     
     <form method="POST">
         <div class="form-group">
-            <label>Användarnamn</label>
+            <label>{{ _('Username') }}</label>
             <input type="text" name="username" required>
         </div>
         
         <div class="form-group">
-            <label>Lösenord</label>
+            <label>{{ _('Password') }}</label>
             <input type="password" name="password" required>
         </div>
         
-        <button type="submit" class="btn" style="width: 100%;">Logga in</button>
+        <button type="submit" class="btn" style="width: 100%;">{{ _('Login') }}</button>
     </form>
     
     <p style="text-align: center; margin-top: 20px; color: #666; font-size: 14px;">
-        Kontakta din administratör för att få ett konto
+        {{ _('Contact your administrator to get an account') }}
     </p>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{{ url_for('set_language', lang='en') }}" style="margin: 0 10px; color: #666;">🇬🇧 English</a>
+        <a href="{{ url_for('set_language', lang='sv') }}" style="margin: 0 10px; color: #666;">🇸🇪 Svenska</a>
+    </div>
 </div>
 {% endblock %}

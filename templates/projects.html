@@ -1,36 +1,36 @@
 {% extends "base.html" %}
 
-{% block title %}Projekt{% endblock %}
+{% block title %}{{ _('Projects') }}{% endblock %}
 
 {% block content %}
-<h2>Projekt</h2>
+<h2>{{ _('Projects') }}</h2>
 
 <div style="background: #fafafa; padding: 25px; border: 1px solid #ddd; margin-bottom: 30px;">
-    <h3>Lägg till nytt projekt</h3>
+    <h3>{{ _('Add new project') }}</h3>
     <form method="POST" action="{{ url_for('add_project') }}">
         <div class="form-group">
-            <label>Projektnamn</label>
+            <label>{{ _('Project name') }}</label>
             <input type="text" name="name" required>
         </div>
         
         <div class="form-group">
-            <label>Beskrivning</label>
+            <label>{{ _('Description') }}</label>
             <textarea name="description" rows="3"></textarea>
         </div>
         
-        <button type="submit" class="btn">Lägg till projekt</button>
+        <button type="submit" class="btn">{{ _('Add project') }}</button>
     </form>
 </div>
 
-<h3>Alla projekt</h3>
+<h3>{{ _('All projects') }}</h3>
 <table>
     <thead>
         <tr>
-            <th>Namn</th>
-            <th>Beskrivning</th>
-            <th>Status</th>
-            <th>Skapad</th>
-            <th>Åtgärd</th>
+            <th>{{ _('Name') }}</th>
+            <th>{{ _('Description') }}</th>
+            <th>{{ _('Status') }}</th>
+            <th>{{ _('Created') }}</th>
+            <th>{{ _('Action') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -40,15 +40,15 @@
             <td>{{ project.description or '-' }}</td>
             <td>
                 {% if project.active %}
-                    <span style="color: green;">✓ Aktiv</span>
+                    <span style="color: green;">✓ {{ _('Active') }}</span>
                 {% else %}
-                    <span style="color: #999;">✗ Inaktiv</span>
+                    <span style="color: #999;">✗ {{ _('Inactive') }}</span>
                 {% endif %}
             </td>
             <td>{{ project.created_at.strftime('%Y-%m-%d') }}</td>
             <td>
                 <a href="{{ url_for('toggle_project', project_id=project.id) }}" class="btn btn-secondary">
-                    {% if project.active %}Inaktivera{% else %}Aktivera{% endif %}
+                    {% if project.active %}{{ _('Deactivate') }}{% else %}{{ _('Activate') }}{% endif %}
                 </a>
             </td>
         </tr>

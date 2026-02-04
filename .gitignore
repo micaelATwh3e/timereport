@@ -17,6 +17,9 @@ instance/
 *.sqlite
 *.sqlite3
 
+# Compiled translations
+*.mo
+
 # Environment variables
 .env
 .env.local

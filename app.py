@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session, g
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from flask_babel import Babel, gettext, lazy_gettext as _l, get_locale
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import calendar
@@ -13,11 +14,34 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key-please-change-in-production')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI', 'sqlite:///timetracker.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'sv']
+app.config['BABEL_TRANSLATION_DIRECTORIES'] = 'translations'
+app.config['SESSION_PERMANENT'] = True
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=365)
+
+def locale_selector():
+    # Check if user has set a language preference in session
+    if 'language' in session:
+        return session['language']
+    # Otherwise use browser preference or default to English
+    return request.accept_languages.best_match(app.config['BABEL_SUPPORTED_LOCALES']) or 'en'
+
+babel = Babel(app, locale_selector=locale_selector)
+
+# Make get_locale available in templates
+app.jinja_env.globals.update(get_locale=get_locale)
+app.jinja_env.globals.update(_=gettext)
 
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(days=365)
 
 # Models
 class User(UserMixin, db.Model):
@@ -166,15 +190,16 @@ def month_view(year, month):
     num_days = calendar.monthrange(year, month)[1]
     month_data = []
     
-    months_swedish = ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni',
-                     'Juli', 'Augusti', 'September', 'Oktober', 'November', 'December']
-    weekdays_swedish = ['Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag', 'Söndag']
+    weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     
     working_days = 0
     
     for day in range(1, num_days + 1):
         date = datetime(year, month, day)
         weekday = date.weekday()
+        
+        # Get translated weekday name
+        weekday_name = gettext(weekdays[weekday])
         
         # Check if holiday
         is_holiday = date in HOLIDAYS_2026
@@ -216,7 +241,7 @@ def month_view(year, month):
         
         month_data.append({
             'date': date,
-            'weekday': weekdays_swedish[weekday],
+            'weekday': weekday_name,
             'is_holiday': is_holiday,
             'is_weekend': is_weekend,
             'leave': leave,
@@ -236,10 +261,14 @@ def month_view(year, month):
     required_hours = working_days * 8
     difference = total_hours - required_hours
     
+    months = ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November', 'December']
+    month_name = gettext(months[month-1])
+    
     return render_template('month_view.html',
                          year=year,
                          month=month,
-                         month_name=months_swedish[month-1],
+                         month_name=month_name,
                          month_data=month_data,
                          projects=projects,
                          project_totals=project_totals,
@@ -702,6 +731,13 @@ def admin_delete_user(user_id):
     
     flash(f'Användare {user.username} borttagen', 'success')
     return redirect(url_for('admin_users'))
+
+@app.route('/set_language/<lang>')
+def set_language(lang):
+    if lang in app.config['BABEL_SUPPORTED_LOCALES']:
+        session['language'] = lang
+        session.permanent = True
+    return redirect(request.referrer or url_for('dashboard'))
 
 if __name__ == '__main__':
     with app.app_context():

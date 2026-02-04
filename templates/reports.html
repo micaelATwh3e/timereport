@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Rapporter{% endblock %}
+{% block title %}{{ _('Reports') }}{% endblock %}
 
 {% block content %}
-<h2>Rapporter för {{ year }}</h2>
+<h2>{{ _('Reports') }} {{ year }}</h2>
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px;">
     <div>
-        <h3>Timmar per projekt</h3>
+        <h3>{{ _('Hours by project') }}</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Projekt</th>
-                    <th>Totalt timmar</th>
+                    <th>{{ _('Project') }}</th>
+                    <th>{{ _('Total hours') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,13 +24,13 @@
                 {% endfor %}
                 {% if not project_summary %}
                 <tr>
-                    <td colspan="2" style="text-align: center; color: #999;">Ingen tid registrerad än</td>
+                    <td colspan="2" style="text-align: center; color: #999;">{{ _('No time registered yet') }}</td>
                 </tr>
                 {% endif %}
             </tbody>
             <tfoot>
                 <tr class="summary-row">
-                    <td>Totalt</td>
+                    <td>{{ _('Total') }}</td>
                     <td style="text-align: center;">
                         {{ "%.1f"|format(project_summary|sum(attribute='1')) }}h
                     </td>
@@ -40,12 +40,12 @@
     </div>
     
     <div>
-        <h3>Frånvaro</h3>
+        <h3>{{ _('Leave') }}</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Typ</th>
-                    <th>Antal perioder</th>
+                    <th>{{ _('Type') }}</th>
+                    <th>{{ _('Number of periods') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,9 +53,9 @@
                 <tr>
                     <td>
                         {% if leave_type == 'vacation' %}
-                            🏖️ Semester
+                            🏖️ {{ _('Vacation') }}
                         {% else %}
-                            🤒 Sjukdom
+                            🤒 {{ _('Sick leave') }}
                         {% endif %}
                     </td>
                     <td style="text-align: center;">{{ count }}</td>
@@ -63,7 +63,7 @@
                 {% endfor %}
                 {% if not leave_summary %}
                 <tr>
-                    <td colspan="2" style="text-align: center; color: #999;">Ingen frånvaro registrerad</td>
+                    <td colspan="2" style="text-align: center; color: #999;">{{ _('No leave registered') }}</td>
                 </tr>
                 {% endif %}
             </tbody>
@@ -72,26 +72,26 @@
 </div>
 
 <div style="margin-top: 40px; padding: 25px; background: #fafafa; border: 1px solid #ddd;">
-    <h3>Sammanfattning</h3>
+    <h3>{{ _('Summary') }}</h3>
     <ul style="list-style: none; padding-left: 0;">
         <li style="padding: 10px; border-bottom: 1px solid #ddd;">
-            <strong>Totalt antal arbetade timmar:</strong> 
+            <strong>{{ _('Total working hours') }}:</strong> 
             {{ "%.1f"|format(project_summary|sum(attribute='1')) }}h
         </li>
         <li style="padding: 10px; border-bottom: 1px solid #ddd;">
-            <strong>Semesterperioder:</strong> 
+            <strong>{{ _('Vacation periods') }}:</strong> 
             {{ leave_summary|selectattr('0', 'equalto', 'vacation')|map(attribute='1')|sum or 0 }}
         </li>
         <li style="padding: 10px; border-bottom: 1px solid #ddd;">
-            <strong>Sjukperioder:</strong> 
+            <strong>{{ _('Sick periods') }}:</strong> 
             {{ leave_summary|selectattr('0', 'equalto', 'sickness')|map(attribute='1')|sum or 0 }}
         </li>
         <li style="padding: 10px; border-bottom: 1px solid #ddd;">
-            <strong>Dagar med tracktamente:</strong> 
+            <strong>{{ _('Travel allowance days') }}:</strong> 
             {{ tracktamente_count }}
         </li>
         <li style="padding: 10px;">
-            <strong>Restid (resor):</strong> 
+            <strong>{{ _('Comp time earned') }}:</strong> 
             {{ "%.1f"|format(travel_time) }}h
         </li>
     </ul>
@@ -99,16 +99,16 @@
 
 <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
     <div>
-        <h3>Månadssummering (senaste 12 månader)</h3>
+        <h3>{{ _('Monthly summary') }} ({{ _('last 12 months') }})</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Månad</th>
-                    <th>Arbetsdagar</th>
-                    <th>Semesterdagar</th>
-                    <th>Mål (timmar)</th>
-                    <th>Faktiskt (timmar)</th>
-                    <th>Uppfyllelse %</th>
+                    <th>{{ _('Month') }}</th>
+                    <th>{{ _('Working days') }}</th>
+                    <th>{{ _('Vacation days') }}</th>
+                    <th>{{ _('Target') }} ({{ _('hours') }})</th>
+                    <th>{{ _('Actual') }} ({{ _('hours') }})</th>
+                    <th>{{ _('Fulfillment') }} %</th>
                 </tr>
             </thead>
             <tbody>
@@ -124,7 +124,7 @@
                 {% endfor %}
                 {% if not monthly_totals %}
                 <tr>
-                    <td colspan="6" style="text-align: center; color: #999;">Ingen data än</td>
+                    <td colspan="6" style="text-align: center; color: #999;">{{ _('No data yet') }}</td>
                 </tr>
                 {% endif %}
             </tbody>
@@ -132,12 +132,12 @@
     </div>
 
     <div>
-        <h3>Årssummering (senaste 5 år)</h3>
+        <h3>{{ _('Yearly summary') }} ({{ _('last 5 years') }})</h3>
         <table>
             <thead>
                 <tr>
-                    <th>År</th>
-                    <th>Totalt timmar</th>
+                    <th>{{ _('Year') }}</th>
+                    <th>{{ _('Total hours') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -159,17 +159,17 @@
 
 <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr; gap: 30px;">
     <div>
-        <h3>Månadvis projektuppfyllelse</h3>
+        <h3>{{ _('Monthly project fulfillment') }}</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Månad</th>
-                    <th>Projekt</th>
-                    <th>Timmar</th>
-                    <th>Målprocent</th>
-                    <th>Behövd timmar</th>
-                    <th>Faktisk %</th>
-                    <th>Status</th>
+                    <th>{{ _('Month') }}</th>
+                    <th>{{ _('Project') }}</th>
+                    <th>{{ _('Hours') }}</th>
+                    <th>{{ _('Target %') }}</th>
+                    <th>{{ _('Required hours') }}</th>
+                    <th>{{ _('Actual %') }}</th>
+                    <th>{{ _('Status') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -197,11 +197,11 @@
                                 <td style="text-align: center;">
                                     {% if target %}
                                         {% if actual_percent >= target %}
-                                            <span style="color: #28a745;">✓ OK</span>
+                                            <span style="color: #28a745;">✓ {{ _('OK') }}</span>
                                         {% elif actual_percent >= target - 2 %}
-                                            <span style="color: #ffc107;">~ Nästan</span>
+                                            <span style="color: #ffc107;">~ {{ _('Almost') }}</span>
                                         {% else %}
-                                            <span style="color: #dc3545;">✗ Under</span>
+                                            <span style="color: #dc3545;">✗ {{ _('Below') }}</span>
                                         {% endif %}
                                     {% else %}
                                         <span style="color: #999;">-</span>
@@ -214,7 +214,7 @@
                 {% endfor %}
                 {% if not monthly_totals %}
                 <tr>
-                    <td colspan="7" style="text-align: center; color: #999;">Ingen data än</td>
+                    <td colspan="7" style="text-align: center; color: #999;">{{ _('No data yet') }}</td>
                 </tr>
                 {% endif %}
             </tbody>
@@ -224,13 +224,13 @@
 
 <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
     <div>
-        <h3>Projektandelar ({{ year }})</h3>
+        <h3>{{ _('Project shares') }} ({{ year }})</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Projekt</th>
-                    <th>Timmar</th>
-                    <th>Andel</th>
+                    <th>{{ _('Project') }}</th>
+                    <th>{{ _('Hours') }}</th>
+                    <th>{{ _('Share') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -243,7 +243,7 @@
                 {% endfor %}
                 {% if not project_percentages %}
                 <tr>
-                    <td colspan="3" style="text-align: center; color: #999;">Ingen data än</td>
+                    <td colspan="3" style="text-align: center; color: #999;">{{ _('No data yet') }}</td>
                 </tr>
                 {% endif %}
             </tbody>
@@ -251,7 +251,7 @@
     </div>
 
     <div>
-        <h3>Grafer</h3>
+        <h3>{{ _('Graphs') }}</h3>
         <div style="background: #fafafa; border: 1px solid #ddd; padding: 20px;">
             <canvas id="monthlyChart" height="140"></canvas>
         </div>
@@ -277,7 +277,7 @@ if (monthlyLabels.length) {
         data: {
             labels: monthlyLabels,
             datasets: [{
-                label: 'Timmar per månad',
+                label: '{{ _('Hours per month') }}',
                 data: monthlyValues,
                 backgroundColor: '#2c3e50'
             }]

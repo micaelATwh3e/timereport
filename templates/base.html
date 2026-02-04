@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="{{ get_locale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Tidrapportering{% endblock %}</title>
+    <title>{% block title %}{{ _('Time Tracking') }}{% endblock %}</title>
     <style>
         * {
             margin: 0;
@@ -230,17 +230,23 @@
     <div class="container">
         {% if current_user.is_authenticated %}
         <nav>
-            <h1>⏱️ Tidrapportering</h1>
+            <h1>⏱️ {{ _('Time Tracking') }}</h1>
             <ul>
-                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ url_for('projects') }}">Projekt</a></li>
-                <li><a href="{{ url_for('project_targets') }}">Målprocent</a></li>
-                <li><a href="{{ url_for('leave') }}">Frånvaro</a></li>
-                <li><a href="{{ url_for('reports') }}">Rapporter</a></li>
+                <li><a href="{{ url_for('dashboard') }}">{{ _('Dashboard') }}</a></li>
+                <li><a href="{{ url_for('projects') }}">{{ _('Projects') }}</a></li>
+                <li><a href="{{ url_for('project_targets') }}">{{ _('Target Percentage') }}</a></li>
+                <li><a href="{{ url_for('leave') }}">{{ _('Leave') }}</a></li>
+                <li><a href="{{ url_for('reports') }}">{{ _('Reports') }}</a></li>
                 {% if current_user.is_admin %}
-                <li><a href="{{ url_for('admin_users') }}">👤 Användare</a></li>
+                <li><a href="{{ url_for('admin_users') }}">👤 {{ _('Users') }}</a></li>
                 {% endif %}
-                <li><a href="{{ url_for('logout') }}">Logga ut ({{ current_user.username }}{% if current_user.is_admin %} - Admin{% endif %})</a></li>
+                <li>
+                    <select id="langDropdown" onchange="window.location.href='{{ url_for('set_language', lang='') }}' + this.value;" style="padding: 6px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; cursor: pointer; font-size: 13px;">
+                        <option value="en">🇬🇧 English</option>
+                        <option value="sv">🇸🇪 Svenska</option>
+                    </select>
+                </li>
+                <li><a href="{{ url_for('logout') }}">{{ _('Logout') }} ({{ current_user.username }}{% if current_user.is_admin %} - {{ _('Admin') }}{% endif %})</a></li>
             </ul>
         </nav>
         {% endif %}
@@ -259,6 +265,17 @@
             {% block content %}{% endblock %}
         </div>
     </div>
+    
+    <script>
+        // Set the language dropdown to the current language
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentLang = '{{ get_locale() }}';
+            var dropdown = document.getElementById('langDropdown');
+            if (dropdown) {
+                dropdown.value = currentLang;
+            }
+        });
+    </script>
     
     {% block scripts %}{% endblock %}
 </body>

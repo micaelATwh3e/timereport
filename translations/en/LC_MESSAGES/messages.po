@@ -1,0 +1,407 @@
+# English translations for Time Tracking App.
+# Copyright (C) 2026
+# This file is distributed under the same license as the Time Tracking App.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-04 09:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: \n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Time Tracking"
+msgstr "Time Tracking"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Projects"
+msgstr "Projects"
+
+msgid "Target Percentage"
+msgstr "Target Percentage"
+
+msgid "Leave"
+msgstr "Leave"
+
+msgid "Reports"
+msgstr "Reports"
+
+msgid "Users"
+msgstr "Users"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Contact your administrator to get an account"
+msgstr "Contact your administrator to get an account"
+
+msgid "Add new project"
+msgstr "Add new project"
+
+msgid "Project name"
+msgstr "Project name"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Add project"
+msgstr "Add project"
+
+msgid "All projects"
+msgstr "All projects"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Created"
+msgstr "Created"
+
+msgid "Action"
+msgstr "Action"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Inactive"
+msgstr "Inactive"
+
+msgid "Deactivate"
+msgstr "Deactivate"
+
+msgid "Activate"
+msgstr "Activate"
+
+msgid "You"
+msgstr "You"
+
+msgid "Remove admin"
+msgstr "Remove admin"
+
+msgid "Make admin"
+msgstr "Make admin"
+
+msgid "Admin rights"
+msgstr "Admin rights"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Create user"
+msgstr "Create user"
+
+msgid "All users"
+msgstr "All users"
+
+msgid "Role"
+msgstr "Role"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "User"
+msgstr "User"
+
+msgid "Manage users"
+msgstr "Manage users"
+
+msgid "Add new user"
+msgstr "Add new user"
+
+msgid "Are you sure you want to delete user"
+msgstr "Are you sure you want to delete user"
+
+msgid "Information"
+msgstr "Information"
+
+msgid "Only admins can add and manage users"
+msgstr "Only admins can add and manage users"
+
+msgid "You cannot delete or change your own admin status"
+msgstr "You cannot delete or change your own admin status"
+
+msgid "New users must be created by an administrator"
+msgstr "New users must be created by an administrator"
+
+msgid "optional"
+msgstr "optional"
+
+msgid "Number of days"
+msgstr "Number of days"
+
+msgid "Are you sure you want to delete this leave?"
+msgstr "Are you sure you want to delete this leave?"
+
+msgid "No leave registered yet."
+msgstr "No leave registered yet."
+
+msgid "Vacation"
+msgstr "Vacation"
+
+msgid "Sick leave"
+msgstr "Sick leave"
+
+msgid "Register leave"
+msgstr "Register leave"
+
+msgid "Type of leave"
+msgstr "Type of leave"
+
+msgid "Start date"
+msgstr "Start date"
+
+msgid "End date"
+msgstr "End date"
+
+msgid "Add leave"
+msgstr "Add leave"
+
+msgid "Registered leave"
+msgstr "Registered leave"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Period"
+msgstr "Period"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "invalid username or password"
+msgstr "Invalid username or password"
+
+msgid "You have been logged out"
+msgstr "You have been logged out"
+
+msgid "Time entry saved!"
+msgstr "Time entry saved!"
+
+msgid "Project added successfully!"
+msgstr "Project added successfully!"
+
+msgid "Project status updated!"
+msgstr "Project status updated!"
+
+msgid "Leave added successfully!"
+msgstr "Leave added successfully!"
+
+msgid "Leave deleted!"
+msgstr "Leave deleted!"
+
+msgid "Target set successfully!"
+msgstr "Target set successfully!"
+
+msgid "Target deleted!"
+msgstr "Target deleted!"
+
+msgid "User created successfully!"
+msgstr "User created successfully!"
+
+msgid "Username already exists!"
+msgstr "Username already exists!"
+
+msgid "Email already exists!"
+msgstr "Email already exists!"
+
+msgid "Admin status updated!"
+msgstr "Admin status updated!"
+
+msgid "User deleted!"
+msgstr "User deleted!"
+
+msgid "You do not have permission to access this page."
+msgstr "You do not have permission to access this page."
+
+msgid "You cannot delete yourself!"
+msgstr "You cannot delete yourself!"
+
+msgid "Set target percentage per project"
+msgstr "Set target percentage per project"
+
+msgid "Show"
+msgstr "Show"
+
+msgid "Set target percentage for"
+msgstr "Set target percentage for"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Target %"
+msgstr "Target %"
+
+msgid "No targets set for this month yet."
+msgstr "No targets set for this month yet."
+
+msgid "No time registered yet"
+msgstr "No time registered yet"
+
+msgid "No leave registered"
+msgstr "No leave registered"
+
+msgid "Total working hours"
+msgstr "Total working hours"
+
+msgid "Vacation periods"
+msgstr "Vacation periods"
+
+msgid "Sick periods"
+msgstr "Sick periods"
+
+msgid "Monthly summary"
+msgstr "Monthly summary"
+
+msgid "last 12 months"
+msgstr "last 12 months"
+
+msgid "Working days"
+msgstr "Working days"
+
+msgid "Vacation days"
+msgstr "Vacation days"
+
+msgid "Target"
+msgstr "Target"
+
+msgid "Actual"
+msgstr "Actual"
+
+msgid "Fulfillment"
+msgstr "Fulfillment"
+
+msgid "No data yet"
+msgstr "No data yet"
+
+msgid "Yearly summary"
+msgstr "Yearly summary"
+
+msgid "last 5 years"
+msgstr "last 5 years"
+
+msgid "Year"
+msgstr "Year"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Summary"
+msgstr "Summary"
+
+msgid "Previous month"
+msgstr "Previous month"
+
+msgid "Next month"
+msgstr "Next month"
+
+msgid "Day"
+msgstr "Day"
+
+msgid "Travel allowance"
+msgstr "Travel allowance"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "working days"
+msgstr "working days"
+
+msgid "Required working hours"
+msgstr "Required working hours"
+
+msgid "Difference"
+msgstr "Difference"
+
+msgid "Legend"
+msgstr "Legend"
+
+msgid "Weekend"
+msgstr "Weekend"
+msgid "Monthly project fulfillment"
+msgstr "Monthly project fulfillment"
+
+msgid "Project shares"
+msgstr "Project shares"
+
+msgid "Graphs"
+msgstr "Graphs"
+
+msgid "Hours per month"
+msgstr "Hours per month"
+
+msgid "Almost"
+msgstr "Almost"
+msgid "Monday"
+msgstr "Monday"
+
+msgid "Tuesday"
+msgstr "Tuesday"
+
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "Thursday"
+msgstr "Thursday"
+
+msgid "Friday"
+msgstr "Friday"
+
+msgid "Saturday"
+msgstr "Saturday"
+
+msgid "Sunday"
+msgstr "Sunday"
+
+msgid "January"
+msgstr "January"
+
+msgid "February"
+msgstr "February"
+
+msgid "March"
+msgstr "March"
+
+msgid "April"
+msgstr "April"
+
+msgid "May"
+msgstr "May"
+
+msgid "June"
+msgstr "June"
+
+msgid "July"
+msgstr "July"
+
+msgid "August"
+msgstr "August"
+
+msgid "September"
+msgstr "September"
+
+msgid "October"
+msgstr "October"
+
+msgid "November"
+msgstr "November"
+
+msgid "December"
+msgstr "December"

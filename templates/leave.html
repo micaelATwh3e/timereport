@@ -1,53 +1,67 @@
 {% extends "base.html" %}
 
-{% block title %}Frånvaro{% endblock %}
+{% block title %}{{ _('Leave') }}{% endblock %}
 
 {% block content %}
-<h2>Frånvaro - Semester & Sjukdom</h2>
+<h2>{{ _('Leave') }} - {{ _('Vacation') }} & {{ _('Sick leave') }}</h2>
 
 <div style="background: #fafafa; padding: 25px; border: 1px solid #ddd; margin-bottom: 30px;">
-    <h3>Registrera frånvaro</h3>
+    <h3>{{ _('Register leave') }}</h3>
     <form method="POST" action="{{ url_for('add_leave') }}">
         <div class="form-group">
-            <label>Typ av frånvaro</label>
+            <label>{{ _('Type of leave') }}</label>
             <select name="leave_type" required>
-                <option value="vacation">🏖️ Semester</option>
-                <option value="sickness">🤒 Sjukdom</option>
+                <option value="vacation">🏖️ {{ _('Vacation') }}</option>
+                <option value="sickness">🤒 {{ _('Sick leave') }}</option>
             </select>
         </div>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div class="form-group">
-                <label>Startdatum</label>
+                <label>{{ _('Start date') }}</label>
                 <input type="date" name="start_date" required>
+                <small style="color: #666;">
+                    {% if get_locale() == 'sv' %}
+                        åååå-mm-dd
+                    {% else %}
+                        mm/dd/yyyy
+                    {% endif %}
+                </small>
             </div>
             
             <div class="form-group">
-                <label>Slutdatum</label>
+                <label>{{ _('End date') }}</label>
                 <input type="date" name="end_date" required>
+                <small style="color: #666;">
+                    {% if get_locale() == 'sv' %}
+                        åååå-mm-dd
+                    {% else %}
+                        mm/dd/yyyy
+                    {% endif %}
+                </small>
             </div>
         </div>
         
         <div class="form-group">
-            <label>Beskrivning (valfritt)</label>
+            <label>{{ _('Description') }} ({{ _('optional') }})</label>
             <textarea name="description" rows="2"></textarea>
         </div>
         
-        <button type="submit" class="btn">Registrera frånvaro</button>
+        <button type="submit" class="btn">{{ _('Add leave') }}</button>
     </form>
 </div>
 
-<h3>Din frånvaro</h3>
+<h3>{{ _('Registered leave') }}</h3>
 {% if leaves %}
 <table>
     <thead>
         <tr>
-            <th>Typ</th>
-            <th>Startdatum</th>
-            <th>Slutdatum</th>
-            <th>Antal dagar</th>
-            <th>Beskrivning</th>
-            <th>Åtgärd</th>
+            <th>{{ _('Type') }}</th>
+            <th>{{ _('Start date') }}</th>
+            <th>{{ _('End date') }}</th>
+            <th>{{ _('Number of days') }}</th>
+            <th>{{ _('Description') }}</th>
+            <th>{{ _('Action') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -55,20 +69,32 @@
         <tr>
             <td>
                 {% if leave.leave_type == 'vacation' %}
-                    🏖️ Semester
+                    🏖️ {{ _('Vacation') }}
                 {% else %}
-                    🤒 Sjukdom
+                    🤒 {{ _('Sick leave') }}
                 {% endif %}
             </td>
-            <td>{{ leave.start_date.strftime('%Y-%m-%d') }}</td>
-            <td>{{ leave.end_date.strftime('%Y-%m-%d') }}</td>
+            <td>
+                {% if get_locale() == 'sv' %}
+                    {{ leave.start_date.strftime('%Y-%m-%d') }}
+                {% else %}
+                    {{ leave.start_date.strftime('%m/%d/%Y') }}
+                {% endif %}
+            </td>
+            <td>
+                {% if get_locale() == 'sv' %}
+                    {{ leave.end_date.strftime('%Y-%m-%d') }}
+                {% else %}
+                    {{ leave.end_date.strftime('%m/%d/%Y') }}
+                {% endif %}
+            </td>
             <td>{{ (leave.end_date - leave.start_date).days + 1 }}</td>
             <td>{{ leave.description or '-' }}</td>
             <td>
                 <a href="{{ url_for('delete_leave', leave_id=leave.id) }}" 
                    class="btn btn-danger"
-                   onclick="return confirm('Är du säker på att du vill ta bort denna frånvaro?')">
-                    Ta bort
+                   onclick="return confirm('{{ _('Are you sure you want to delete this leave?') }}')">
+                    {{ _('Delete') }}
                 </a>
             </td>
         </tr>
@@ -76,6 +102,6 @@
     </tbody>
 </table>
 {% else %}
-<p style="text-align: center; padding: 40px; color: #999;">Ingen frånvaro registrerad än.</p>
+<p style="text-align: center; padding: 40px; color: #999;">{{ _('No leave registered yet.') }}</p>
 {% endif %}
 {% endblock %}

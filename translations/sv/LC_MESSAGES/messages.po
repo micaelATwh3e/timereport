@@ -1,0 +1,407 @@
+# Swedish translations for Time Tracking App.
+# Copyright (C) 2026
+# This file is distributed under the same license as the Time Tracking App.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-04 09:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: \n"
+"Language-Team: Swedish\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Time Tracking"
+msgstr "Tidrapportering"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Projects"
+msgstr "Projekt"
+
+msgid "Target Percentage"
+msgstr "Målprocent"
+
+msgid "Leave"
+msgstr "Frånvaro"
+
+msgid "Reports"
+msgstr "Rapporter"
+
+msgid "Users"
+msgstr "Användare"
+
+msgid "Logout"
+msgstr "Logga ut"
+
+msgid "Login"
+msgstr "Logga in"
+
+msgid "Username"
+msgstr "Användarnamn"
+
+msgid "Password"
+msgstr "Lösenord"
+
+msgid "Contact your administrator to get an account"
+msgstr "Kontakta din administratör för att få ett konto"
+
+msgid "Add new project"
+msgstr "Lägg till nytt projekt"
+
+msgid "Project name"
+msgstr "Projektnamn"
+
+msgid "Description"
+msgstr "Beskrivning"
+
+msgid "Add project"
+msgstr "Lägg till projekt"
+
+msgid "All projects"
+msgstr "Alla projekt"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Created"
+msgstr "Skapad"
+
+msgid "Action"
+msgstr "Åtgärd"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Inactive"
+msgstr "Inaktiv"
+
+msgid "Deactivate"
+msgstr "Inaktivera"
+
+msgid "Activate"
+msgstr "Aktivera"
+
+msgid "You"
+msgstr "Du"
+
+msgid "Remove admin"
+msgstr "Ta bort admin"
+
+msgid "Make admin"
+msgstr "Gör admin"
+
+msgid "Admin rights"
+msgstr "Administratörsrättigheter"
+
+msgid "Email"
+msgstr "E-post"
+
+msgid "Create user"
+msgstr "Skapa användare"
+
+msgid "All users"
+msgstr "Alla användare"
+
+msgid "Role"
+msgstr "Roll"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "User"
+msgstr "Användare"
+
+msgid "Manage users"
+msgstr "Hantera användare"
+
+msgid "Add new user"
+msgstr "Lägg till ny användare"
+
+msgid "Are you sure you want to delete user"
+msgstr "Är du säker på att du vill ta bort användaren"
+
+msgid "Information"
+msgstr "Information"
+
+msgid "Only admins can add and manage users"
+msgstr "Endast administratörer kan lägga till och hantera användare"
+
+msgid "You cannot delete or change your own admin status"
+msgstr "Du kan inte ta bort eller ändra din egen administratörsstatus"
+
+msgid "New users must be created by an administrator"
+msgstr "Nya användare måste skapas av en administratör"
+
+msgid "optional"
+msgstr "valfritt"
+
+msgid "Number of days"
+msgstr "Antal dagar"
+
+msgid "Are you sure you want to delete this leave?"
+msgstr "Är du säker på att du vill ta bort denna frånvaro?"
+
+msgid "No leave registered yet."
+msgstr "Ingen frånvaro registrerad än."
+
+msgid "Vacation"
+msgstr "Semester"
+
+msgid "Sick leave"
+msgstr "Sjukdom"
+
+msgid "Register leave"
+msgstr "Registrera frånvaro"
+
+msgid "Type of leave"
+msgstr "Typ av frånvaro"
+
+msgid "Start date"
+msgstr "Startdatum"
+
+msgid "End date"
+msgstr "Slutdatum"
+
+msgid "Add leave"
+msgstr "Lägg till frånvaro"
+
+msgid "Registered leave"
+msgstr "Registrerad frånvaro"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Period"
+msgstr "Period"
+
+msgid "Delete"
+msgstr "Ta bort"
+
+msgid "invalid username or password"
+msgstr "Ogiltigt användarnamn eller lösenord"
+
+msgid "You have been logged out"
+msgstr "Du har loggats ut"
+
+msgid "Time entry saved!"
+msgstr "Tidrapport sparad!"
+
+msgid "Project added successfully!"
+msgstr "Projekt tillagt!"
+
+msgid "Project status updated!"
+msgstr "Projektstatus uppdaterad!"
+
+msgid "Leave added successfully!"
+msgstr "Frånvaro tillagd!"
+
+msgid "Leave deleted!"
+msgstr "Frånvaro borttagen!"
+
+msgid "Target set successfully!"
+msgstr "Mål inställt!"
+
+msgid "Target deleted!"
+msgstr "Mål borttaget!"
+
+msgid "User created successfully!"
+msgstr "Användare skapad!"
+
+msgid "Username already exists!"
+msgstr "Användarnamn finns redan!"
+
+msgid "Email already exists!"
+msgstr "E-post finns redan!"
+
+msgid "Admin status updated!"
+msgstr "Admin-status uppdaterad!"
+
+msgid "User deleted!"
+msgstr "Användare borttagen!"
+
+msgid "You do not have permission to access this page."
+msgstr "Du har inte behörighet att komma åt den här sidan."
+
+msgid "You cannot delete yourself!"
+msgstr "Du kan inte ta bort dig själv!"
+
+msgid "Set target percentage per project"
+msgstr "Ange målprocent per projekt"
+
+msgid "Show"
+msgstr "Visa"
+
+msgid "Set target percentage for"
+msgstr "Ställ in målprocent för"
+
+msgid "Save"
+msgstr "Spara"
+
+msgid "Target %"
+msgstr "Mål %"
+
+msgid "No targets set for this month yet."
+msgstr "Ingen målprocent satt för denna månad än."
+
+msgid "No time registered yet"
+msgstr "Ingen tid registrerad än"
+
+msgid "No leave registered"
+msgstr "Ingen frånvaro registrerad"
+
+msgid "Total working hours"
+msgstr "Totalt antal arbetade timmar"
+
+msgid "Vacation periods"
+msgstr "Semesterperioder"
+
+msgid "Sick periods"
+msgstr "Sjukperioder"
+
+msgid "Monthly summary"
+msgstr "Månadssummering"
+
+msgid "last 12 months"
+msgstr "senaste 12 månader"
+
+msgid "Working days"
+msgstr "Arbetsdagar"
+
+msgid "Vacation days"
+msgstr "Semesterdagar"
+
+msgid "Target"
+msgstr "Mål"
+
+msgid "Actual"
+msgstr "Faktiskt"
+
+msgid "Fulfillment"
+msgstr "Uppfyllelse"
+
+msgid "No data yet"
+msgstr "Ingen data än"
+
+msgid "Yearly summary"
+msgstr "Årssummering"
+
+msgid "last 5 years"
+msgstr "senaste 5 år"
+
+msgid "Year"
+msgstr "År"
+
+msgid "Total"
+msgstr "Totalt"
+
+msgid "Summary"
+msgstr "Sammanfattning"
+
+msgid "Previous month"
+msgstr "Föregående månad"
+
+msgid "Next month"
+msgstr "Nästa månad"
+
+msgid "Day"
+msgstr "Dag"
+
+msgid "Travel allowance"
+msgstr "Traktamente"
+
+msgid "Total"
+msgstr "Totalt"
+
+msgid "working days"
+msgstr "arbetsdagar"
+
+msgid "Required working hours"
+msgstr "Behövd arbetstid"
+
+msgid "Difference"
+msgstr "Differens"
+
+msgid "Legend"
+msgstr "Förklaring"
+
+msgid "Weekend"
+msgstr "Helg (Lördag/Söndag)"
+msgid "Monthly project fulfillment"
+msgstr "Månadvis projektuppfyllelse"
+
+msgid "Project shares"
+msgstr "Projektandelar"
+
+msgid "Graphs"
+msgstr "Grafer"
+
+msgid "Hours per month"
+msgstr "Timmar per månad"
+
+msgid "Almost"
+msgstr "Nästan"
+msgid "Monday"
+msgstr "Måndag"
+
+msgid "Tuesday"
+msgstr "Tisdag"
+
+msgid "Wednesday"
+msgstr "Onsdag"
+
+msgid "Thursday"
+msgstr "Torsdag"
+
+msgid "Friday"
+msgstr "Fredag"
+
+msgid "Saturday"
+msgstr "Lördag"
+
+msgid "Sunday"
+msgstr "Söndag"
+
+msgid "January"
+msgstr "Januari"
+
+msgid "February"
+msgstr "Februari"
+
+msgid "March"
+msgstr "Mars"
+
+msgid "April"
+msgstr "April"
+
+msgid "May"
+msgstr "Maj"
+
+msgid "June"
+msgstr "Juni"
+
+msgid "July"
+msgstr "Juli"
+
+msgid "August"
+msgstr "Augusti"
+
+msgid "September"
+msgstr "September"
+
+msgid "October"
+msgstr "Oktober"
+
+msgid "November"
+msgstr "November"
+
+msgid "December"
+msgstr "December"
