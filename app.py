@@ -6,6 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import calendar
 import os
+from pathlib import Path
+import subprocess
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -28,6 +30,32 @@ def locale_selector():
     return request.accept_languages.best_match(app.config['BABEL_SUPPORTED_LOCALES']) or 'en'
 
 babel = Babel(app, locale_selector=locale_selector)
+
+def compile_translations_if_needed():
+    translations_dir = Path(app.root_path) / 'translations'
+    if not translations_dir.exists():
+        return
+
+    po_files = list(translations_dir.rglob('messages.po'))
+    if not po_files:
+        return
+
+    needs_compile = False
+    for po_file in po_files:
+        mo_file = po_file.with_suffix('.mo')
+        if not mo_file.exists() or mo_file.stat().st_mtime < po_file.stat().st_mtime:
+            needs_compile = True
+            break
+
+    if not needs_compile:
+        return
+
+    try:
+        subprocess.run(['pybabel', 'compile', '-d', str(translations_dir)], check=True)
+    except Exception as exc:
+        print(f"Translation compile skipped: {exc}")
+
+compile_translations_if_needed()
 
 # Make get_locale available in templates
 app.jinja_env.globals.update(get_locale=get_locale)

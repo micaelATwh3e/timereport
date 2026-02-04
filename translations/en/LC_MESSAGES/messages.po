@@ -48,6 +48,21 @@ msgstr "Username"
 msgid "Password"
 msgstr "Password"
 
+msgid "Create first admin"
+msgstr "Create first admin"
+
+msgid "Create first administrator account"
+msgstr "Create first administrator account"
+
+msgid "No account exists yet. Create the first administrator account."
+msgstr "No account exists yet. Create the first administrator account."
+
+msgid "Create administrator account"
+msgstr "Create administrator account"
+
+msgid "Back to login"
+msgstr "Back to login"
+
 msgid "Contact your administrator to get an account"
 msgstr "Contact your administrator to get an account"
 
@@ -243,6 +258,9 @@ msgstr "Show"
 msgid "Set target percentage for"
 msgstr "Set target percentage for"
 
+msgid "Current targets"
+msgstr "Current targets"
+
 msgid "Save"
 msgstr "Save"
 
@@ -257,6 +275,39 @@ msgstr "No time registered yet"
 
 msgid "No leave registered"
 msgstr "No leave registered"
+
+msgid "Month"
+msgstr "Month"
+
+msgid "Project"
+msgstr "Project"
+
+msgid "Hours by project"
+msgstr "Hours by project"
+
+msgid "Number of periods"
+msgstr "Number of periods"
+
+msgid "Travel allowance days"
+msgstr "Travel allowance days"
+
+msgid "Comp time earned"
+msgstr "Comp time earned"
+
+msgid "Hours"
+msgstr "Hours"
+
+msgid "hours"
+msgstr "hours"
+
+msgid "Required hours"
+msgstr "Required hours"
+
+msgid "Actual %"
+msgstr "Actual %"
+
+msgid "Share"
+msgstr "Share"
 
 msgid "Total working hours"
 msgstr "Total working hours"
@@ -333,6 +384,9 @@ msgstr "Difference"
 msgid "Legend"
 msgstr "Legend"
 
+msgid "Public holiday"
+msgstr "Public holiday"
+
 msgid "Weekend"
 msgstr "Weekend"
 msgid "Monthly project fulfillment"
@@ -349,6 +403,13 @@ msgstr "Hours per month"
 
 msgid "Almost"
 msgstr "Almost"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Below"
+msgstr "Below"
+
 msgid "Monday"
 msgstr "Monday"
 

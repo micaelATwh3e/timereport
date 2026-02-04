@@ -1,33 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}Skapa första admin{% endblock %}
+{% block title %}{{ _('Create first admin') }}{% endblock %}
 
 {% block content %}
 <div style="max-width: 420px; margin: 80px auto; padding: 40px; border: 1px solid #ddd; background: #fafafa;">
-    <h2 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">Skapa första administratörskonto</h2>
-    <p style="text-align: center; margin-bottom: 30px; color: #666; font-size: 14px;">Inget konto finns ännu. Skapa det första administratörskontot.</p>
+    <h2 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">{{ _('Create first administrator account') }}</h2>
+    <p style="text-align: center; margin-bottom: 30px; color: #666; font-size: 14px;">{{ _('No account exists yet. Create the first administrator account.') }}</p>
     
     <form method="POST">
         <div class="form-group">
-            <label>Användarnamn</label>
+            <label>{{ _('Username') }}</label>
             <input type="text" name="username" required>
         </div>
         
         <div class="form-group">
-            <label>E-post</label>
+            <label>{{ _('Email') }}</label>
             <input type="email" name="email" required>
         </div>
         
         <div class="form-group">
-            <label>Lösenord</label>
+            <label>{{ _('Password') }}</label>
             <input type="password" name="password" required>
         </div>
         
-        <button type="submit" class="btn" style="width: 100%;">Skapa administratörskonto</button>
+        <button type="submit" class="btn" style="width: 100%;">{{ _('Create administrator account') }}</button>
     </form>
     
     <p style="text-align: center; margin-top: 20px;">
-        <a href="{{ url_for('login') }}">Tillbaka till inloggning</a>
+        <a href="{{ url_for('login') }}">{{ _('Back to login') }}</a>
     </p>
 </div>
 {% endblock %}

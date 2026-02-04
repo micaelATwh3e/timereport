@@ -48,6 +48,21 @@ msgstr "Användarnamn"
 msgid "Password"
 msgstr "Lösenord"
 
+msgid "Create first admin"
+msgstr "Skapa första admin"
+
+msgid "Create first administrator account"
+msgstr "Skapa första administratörskonto"
+
+msgid "No account exists yet. Create the first administrator account."
+msgstr "Inget konto finns ännu. Skapa det första administratörskontot."
+
+msgid "Create administrator account"
+msgstr "Skapa administratörskonto"
+
+msgid "Back to login"
+msgstr "Tillbaka till inloggning"
+
 msgid "Contact your administrator to get an account"
 msgstr "Kontakta din administratör för att få ett konto"
 
@@ -243,6 +258,9 @@ msgstr "Visa"
 msgid "Set target percentage for"
 msgstr "Ställ in målprocent för"
 
+msgid "Current targets"
+msgstr "Nuvarande mål"
+
 msgid "Save"
 msgstr "Spara"
 
@@ -257,6 +275,39 @@ msgstr "Ingen tid registrerad än"
 
 msgid "No leave registered"
 msgstr "Ingen frånvaro registrerad"
+
+msgid "Month"
+msgstr "Månad"
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Hours by project"
+msgstr "Timmar per projekt"
+
+msgid "Number of periods"
+msgstr "Antal perioder"
+
+msgid "Travel allowance days"
+msgstr "Traktamentedagar"
+
+msgid "Comp time earned"
+msgstr "Intjänad restid"
+
+msgid "Hours"
+msgstr "Timmar"
+
+msgid "hours"
+msgstr "timmar"
+
+msgid "Required hours"
+msgstr "Behövd timmar"
+
+msgid "Actual %"
+msgstr "Faktisk %"
+
+msgid "Share"
+msgstr "Andel"
 
 msgid "Total working hours"
 msgstr "Totalt antal arbetade timmar"
@@ -333,6 +384,9 @@ msgstr "Differens"
 msgid "Legend"
 msgstr "Förklaring"
 
+msgid "Public holiday"
+msgstr "Helgdag"
+
 msgid "Weekend"
 msgstr "Helg (Lördag/Söndag)"
 msgid "Monthly project fulfillment"
@@ -349,6 +403,13 @@ msgstr "Timmar per månad"
 
 msgid "Almost"
 msgstr "Nästan"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Below"
+msgstr "Under"
+
 msgid "Monday"
 msgstr "Måndag"
 
