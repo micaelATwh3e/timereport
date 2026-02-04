@@ -17,8 +17,6 @@
         {% else %}
             <a href="{{ url_for('month_view', year=year+1, month=1) }}" class="btn btn-secondary">{{ _('Next month') }} →</a>
         {% endif %}
-
-        <a href="{{ url_for('month_print', year=year, month=month) }}" class="btn btn-secondary" target="_blank">{{ _('Print') }}</a>
     </div>
 </div>
 

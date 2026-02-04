@@ -180,7 +180,9 @@ def dashboard():
     
     return redirect(url_for('month_view', year=current_year, month=current_month))
 
-def build_month_context(year, month):
+@app.route('/month/<int:year>/<int:month>')
+@login_required
+def month_view(year, month):
     # Get user's projects
     projects = Project.query.filter_by(user_id=current_user.id, active=True).all()
     
@@ -263,30 +265,17 @@ def build_month_context(year, month):
               'July', 'August', 'September', 'October', 'November', 'December']
     month_name = gettext(months[month-1])
     
-    return {
-        'year': year,
-        'month': month,
-        'month_name': month_name,
-        'month_data': month_data,
-        'projects': projects,
-        'project_totals': project_totals,
-        'total_hours': total_hours,
-        'working_days': working_days,
-        'required_hours': required_hours,
-        'difference': difference
-    }
-
-@app.route('/month/<int:year>/<int:month>')
-@login_required
-def month_view(year, month):
-    context = build_month_context(year, month)
-    return render_template('month_view.html', **context)
-
-@app.route('/month/<int:year>/<int:month>/print')
-@login_required
-def month_print(year, month):
-    context = build_month_context(year, month)
-    return render_template('print_timereport.html', **context)
+    return render_template('month_view.html',
+                         year=year,
+                         month=month,
+                         month_name=month_name,
+                         month_data=month_data,
+                         projects=projects,
+                         project_totals=project_totals,
+                         total_hours=total_hours,
+                         working_days=working_days,
+                         required_hours=required_hours,
+                         difference=difference)
 
 @app.route('/add_time_entry', methods=['POST'])
 @login_required
