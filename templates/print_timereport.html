@@ -98,6 +98,7 @@
                 <th>{{ project.name }}</th>
                 {% endfor %}
                 <th>{{ _('Comp time') }}</th>
+                <th>{{ _('Travel allowance') }}</th>
                 <th>{{ _('Total hours') }}</th>
             </tr>
         </thead>
@@ -121,6 +122,9 @@
                         {{ day.restid_hours }}
                         {% if day.restid_tracktamente %}*{% endif %}
                     {% endif %}
+                </td>
+                <td style="text-align: center;">
+                    {% if day.restid_tracktamente %}✓{% endif %}
                 </td>
                 <td>{{ "%.1f"|format(day.total) if day.total else '' }}</td>
             </tr>

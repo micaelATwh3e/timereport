@@ -352,9 +352,24 @@ def add_time_entry():
                 )
                 db.session.add(entry)
         else:
-            # Delete entry if hours = 0
-            if entry:
-                db.session.delete(entry)
+            if tracktamente:
+                # Keep or create entry even with 0 hours
+                if entry:
+                    entry.hours = 0
+                    entry.tracktamente = True
+                else:
+                    entry = TimeEntry(
+                        user_id=current_user.id,
+                        date=date,
+                        hours=0,
+                        is_restid=True,
+                        tracktamente=True
+                    )
+                    db.session.add(entry)
+            else:
+                # Delete entry if no hours and no travel allowance
+                if entry:
+                    db.session.delete(entry)
     else:
         # Check if entry exists for this project
         entry = TimeEntry.query.filter_by(

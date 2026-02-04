@@ -32,6 +32,7 @@
                 <th>{{ project.name }}</th>
                 {% endfor %}
                 <th>{{ _('Comp time') }}</th>
+                <th>{{ _('Travel allowance') }}</th>
                 <th>{{ _('Total hours') }}</th>
             </tr>
         </thead>
@@ -61,24 +62,24 @@
                 </td>
                 {% endfor %}
                 <td>
-                    <div style="display: flex; gap: 5px; align-items: center;">
-                        <input type="number" 
-                               class="time-input" 
-                               data-date="{{ day.date.strftime('%Y-%m-%d') }}"
-                               data-restid="true"
-                               value="{% if day.restid_hours %}{{ day.restid_hours }}{% endif %}"
-                               min="0"
-                               max="24"
-                               step="0.5"
-                               onchange="updateTimeEntry(this)">
-                        <input type="checkbox" 
-                               class="tracktamente-check"
-                               data-date="{{ day.date.strftime('%Y-%m-%d') }}"
-                               title="{{ _('Travel allowance') }}"
-                               style="width: auto; cursor: pointer;"
-                               onchange="updateTracktamente(this)"
-                               {% if day.restid_tracktamente %}checked{% endif %}>
-                    </div>
+                    <input type="number" 
+                           class="time-input" 
+                           data-date="{{ day.date.strftime('%Y-%m-%d') }}"
+                           data-restid="true"
+                           value="{% if day.restid_hours %}{{ day.restid_hours }}{% endif %}"
+                           min="0"
+                           max="24"
+                           step="0.5"
+                           onchange="updateTimeEntry(this)">
+                </td>
+                <td style="text-align: center;">
+                    <input type="checkbox" 
+                           class="tracktamente-check"
+                           data-date="{{ day.date.strftime('%Y-%m-%d') }}"
+                           title="{{ _('Travel allowance') }}"
+                           style="width: auto; cursor: pointer;"
+                           onchange="updateTracktamente(this)"
+                           {% if day.restid_tracktamente %}checked{% endif %}>
                 </td>
                 <td style="text-align: center; font-weight: bold;">{{ day.total }}</td>
             </tr>
@@ -90,17 +91,18 @@
                 <td style="text-align: center;">{{ project_totals[project.id] }}</td>
                 {% endfor %}
                 <td style="text-align: center;">-</td>
+                <td style="text-align: center;">-</td>
                 <td style="text-align: center;">{{ total_hours }}</td>
             </tr>
             
             <tr style="font-style: italic;">
                 <td colspan="2">{{ _('Required working hours') }} ({{ working_days }} × 8h)</td>
-                <td colspan="{{ projects|length + 1 }}" style="text-align: center;">{{ required_hours }}h</td>
+                <td colspan="{{ projects|length + 3 }}" style="text-align: center;">{{ required_hours }}h</td>
             </tr>
             
             <tr style="font-weight: bold; background: {% if difference >= 0 %}#d4edda{% else %}#f8d7da{% endif %};">
                 <td colspan="2">{{ _('Difference') }}</td>
-                <td colspan="{{ projects|length + 1 }}" style="text-align: center;">
+                <td colspan="{{ projects|length + 3 }}" style="text-align: center;">
                     {{ "%.1f"|format(difference) }}h
                     {% if difference >= 0 %}✓{% else %}⚠️{% endif %}
                 </td>
@@ -158,9 +160,9 @@ function updateTracktamente(input) {
     const date = input.dataset.date;
     const isChecked = input.checked;
     
-    // Get the restid hours from the input field next to this checkbox
-    const restidInput = input.closest('div').querySelector('input[type="number"]');
-    const hours = parseFloat(restidInput.value) || 0;
+    // Get the restid hours input for the same date (if any)
+    const restidInput = document.querySelector(`input[type="number"][data-restid="true"][data-date="${date}"]`);
+    const hours = restidInput ? (parseFloat(restidInput.value) || 0) : 0;
     
     fetch('/add_time_entry', {
         method: 'POST',

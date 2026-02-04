@@ -292,7 +292,7 @@ msgid "Travel allowance days"
 msgstr "Travel allowance days"
 
 msgid "Comp time earned"
-msgstr "Comp time earned"
+msgstr "Travel time earned"
 
 msgid "Hours"
 msgstr "Hours"
@@ -471,7 +471,7 @@ msgid "Date"
 msgstr "Date"
 
 msgid "Comp time"
-msgstr "Comp time"
+msgstr "Travel time"
 
 msgid "Total hours"
 msgstr "Total hours"
