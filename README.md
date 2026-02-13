@@ -5,7 +5,7 @@ A Flask-based web system for time reporting with support for:
 - Project management
 - Time reporting per day and project
 - Vacation and sick leave registration
-- Swedish holidays and weekends
+- SE,NO,DK,DE,US,GB,FI holidays and weekends
 - Monthly overviews with working-day calculations
 - Reports and statistics
 
@@ -73,14 +73,6 @@ python app.py
 - Authentication: Flask-Login
 - ORM: SQLAlchemy
 
-## Swedish Holidays 2026
-
-The system includes all Swedish holidays for 2026:
-- New Year's Day, Epiphany
-- Good Friday, Easter weekend
-- May Day, Ascension Day, Pentecost
-- National Day, Midsummer Eve
-- Christmas holidays, New Year's Eve
-
 ### If you want to help with translations please drop me a <a href="mailto:contact@wh3e.se">mail</a>.
+
 
