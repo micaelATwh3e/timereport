@@ -81,3 +81,6 @@ The system includes all Swedish holidays for 2026:
 - May Day, Ascension Day, Pentecost
 - National Day, Midsummer Eve
 - Christmas holidays, New Year's Eve
+
+### If you want to help with translations please drop me a <a href="mailto:contact@wh3e.se">mail</a>.
+
