@@ -264,6 +264,27 @@ msgstr "Current targets"
 msgid "Save"
 msgstr "Save"
 
+msgid "Holidays"
+msgstr "Holidays"
+
+msgid "Use public holidays"
+msgstr "Use public holidays"
+
+msgid "Holiday country"
+msgstr "Holiday country"
+
+msgid "Enabled"
+msgstr "Enabled"
+
+msgid "Disabled"
+msgstr "Disabled"
+
+msgid "Holiday settings updated"
+msgstr "Holiday settings updated"
+
+msgid "Invalid holiday country"
+msgstr "Invalid holiday country"
+
 msgid "Target %"
 msgstr "Target %"
 

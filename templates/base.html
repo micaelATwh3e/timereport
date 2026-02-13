@@ -237,6 +237,7 @@
                 <li><a href="{{ url_for('project_targets') }}">{{ _('Target Percentage') }}</a></li>
                 <li><a href="{{ url_for('leave') }}">{{ _('Leave') }}</a></li>
                 <li><a href="{{ url_for('reports') }}">{{ _('Reports') }}</a></li>
+                <li><a href="{{ url_for('holiday_settings') }}">{{ _('Holidays') }}</a></li>
                 {% if current_user.is_admin %}
                 <li><a href="{{ url_for('admin_users') }}">👤 {{ _('Users') }}</a></li>
                 {% endif %}

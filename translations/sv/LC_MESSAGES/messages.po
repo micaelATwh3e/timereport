@@ -264,6 +264,27 @@ msgstr "Nuvarande mål"
 msgid "Save"
 msgstr "Spara"
 
+msgid "Holidays"
+msgstr "Helgdagar"
+
+msgid "Use public holidays"
+msgstr "Använd allmänna helgdagar"
+
+msgid "Holiday country"
+msgstr "Land för helgdagar"
+
+msgid "Enabled"
+msgstr "Aktiverad"
+
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+msgid "Holiday settings updated"
+msgstr "Helgdagsinställningar uppdaterade"
+
+msgid "Invalid holiday country"
+msgstr "Ogiltigt helgdagsland"
+
 msgid "Target %"
 msgstr "Mål %"
 

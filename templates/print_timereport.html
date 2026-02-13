@@ -82,6 +82,14 @@
         </div>
         <div class="meta">
             <div><strong>{{ _('Employee') }}:</strong> {{ current_user.username }}</div>
+            <div>
+                <strong>{{ _('Holidays') }}:</strong>
+                {% if holiday_setting.use_holidays %}
+                    {{ _('Enabled') }} ({{ holiday_country_name }})
+                {% else %}
+                    {{ _('Disabled') }}
+                {% endif %}
+            </div>
         </div>
     </div>
 

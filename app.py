@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import subprocess
 from dotenv import load_dotenv
+import holidays as holidays_lib
 
 load_dotenv()
 
@@ -127,23 +128,23 @@ class ProjectTarget(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     project = db.relationship('Project', backref='targets')
 
-# Svenska helgdagar 2026
-HOLIDAYS_2026 = [
-    datetime(2026, 1, 1),   # Nyårsdagen
-    datetime(2026, 1, 6),   # Trettondedag jul
-    datetime(2026, 4, 3),   # Långfredagen
-    datetime(2026, 4, 5),   # Påskdagen
-    datetime(2026, 4, 6),   # Annandag påsk
-    datetime(2026, 5, 1),   # Första maj
-    datetime(2026, 5, 14),  # Kristi himmelsfärdsdag
-    datetime(2026, 5, 24),  # Pingstdagen
-    datetime(2026, 6, 6),   # Nationaldagen
-    datetime(2026, 6, 20),  # Midsommarafton
-    datetime(2026, 12, 24), # Julafton
-    datetime(2026, 12, 25), # Juldagen
-    datetime(2026, 12, 26), # Annandag jul
-    datetime(2026, 12, 31), # Nyårsafton
-]
+class UserHolidaySetting(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True, nullable=False)
+    use_holidays = db.Column(db.Boolean, default=True)
+    country_code = db.Column(db.String(10), default='SE')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    user = db.relationship('User', backref=db.backref('holiday_setting', uselist=False))
+
+HOLIDAY_COUNTRIES = {
+    'SE': 'Sweden',
+    'NO': 'Norway',
+    'FI': 'Finland',
+    'DK': 'Denmark',
+    'DE': 'Germany',
+    'GB': 'United Kingdom',
+    'US': 'United States'
+}
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -208,7 +209,31 @@ def dashboard():
     
     return redirect(url_for('month_view', year=current_year, month=current_month))
 
+def get_or_create_holiday_setting(user_id):
+    setting = UserHolidaySetting.query.filter_by(user_id=user_id).first()
+    if not setting:
+        setting = UserHolidaySetting(user_id=user_id, use_holidays=True, country_code='SE')
+        db.session.add(setting)
+        db.session.commit()
+    return setting
+
+def get_holiday_dates_for_year(year, setting):
+    if not setting.use_holidays:
+        return set()
+
+    country_code = setting.country_code or 'SE'
+    if country_code not in HOLIDAY_COUNTRIES:
+        country_code = 'SE'
+
+    try:
+        return holidays_lib.country_holidays(country_code, years=[year])
+    except Exception:
+        return set()
+
 def build_month_context(year, month):
+    holiday_setting = get_or_create_holiday_setting(current_user.id)
+    holiday_dates = get_holiday_dates_for_year(year, holiday_setting)
+
     # Get user's projects
     projects = Project.query.filter_by(user_id=current_user.id, active=True).all()
     
@@ -228,7 +253,7 @@ def build_month_context(year, month):
         weekday_name = gettext(weekdays[weekday])
         
         # Check if holiday
-        is_holiday = date in HOLIDAYS_2026
+        is_holiday = date.date() in holiday_dates
         is_weekend = weekday in [5, 6]
         
         # Get time entries for this day
@@ -301,7 +326,10 @@ def build_month_context(year, month):
         'total_hours': total_hours,
         'working_days': working_days,
         'required_hours': required_hours,
-        'difference': difference
+        'difference': difference,
+        'holiday_setting': holiday_setting,
+        'holiday_country_name': HOLIDAY_COUNTRIES.get(holiday_setting.country_code, holiday_setting.country_code),
+        'holiday_countries': HOLIDAY_COUNTRIES
     }
 
 @app.route('/month/<int:year>/<int:month>')
@@ -315,6 +343,31 @@ def month_view(year, month):
 def month_print(year, month):
     context = build_month_context(year, month)
     return render_template('print_timereport.html', **context)
+
+@app.route('/holiday-settings', methods=['GET', 'POST'])
+@login_required
+def holiday_settings():
+    setting = get_or_create_holiday_setting(current_user.id)
+
+    if request.method == 'POST':
+        use_holidays = request.form.get('use_holidays') == 'on'
+        country_code = request.form.get('country_code', 'SE')
+
+        if country_code not in HOLIDAY_COUNTRIES:
+            flash(gettext('Invalid holiday country'), 'error')
+            return redirect(url_for('holiday_settings'))
+
+        setting.use_holidays = use_holidays
+        setting.country_code = country_code
+        db.session.commit()
+        flash(gettext('Holiday settings updated'), 'success')
+        return redirect(url_for('holiday_settings'))
+
+    return render_template(
+        'holiday_settings.html',
+        holiday_setting=setting,
+        holiday_countries=HOLIDAY_COUNTRIES
+    )
 
 @app.route('/add_time_entry', methods=['POST'])
 @login_required
@@ -543,6 +596,8 @@ def delete_target(target_id):
 def reports():
     # Get summary for current year
     current_year = datetime.now().year
+    holiday_setting = get_or_create_holiday_setting(current_user.id)
+    holiday_cache = {}
     
     # Total hours per project
     from sqlalchemy import func
@@ -584,6 +639,10 @@ def reports():
         year_month = month_str.split('-')
         year_val = int(year_month[0])
         month_val = int(year_month[1])
+
+        if year_val not in holiday_cache:
+            holiday_cache[year_val] = get_holiday_dates_for_year(year_val, holiday_setting)
+        holiday_dates = holiday_cache[year_val]
         
         # Count working days in month (excluding weekends and holidays)
         working_days = 0
@@ -593,7 +652,7 @@ def reports():
         for day in range(1, num_days + 1):
             date = datetime(year_val, month_val, day)
             weekday = date.weekday()
-            is_holiday = date in HOLIDAYS_2026
+            is_holiday = date.date() in holiday_dates
             is_weekend = weekday in [5, 6]
             
             if not is_holiday and not is_weekend:

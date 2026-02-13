@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Holidays') }}{% endblock %}
+
+{% block content %}
+<h2>{{ _('Holidays') }}</h2>
+
+<form method="post" style="max-width: 520px;">
+    <div class="form-group">
+        <label for="use_holidays">{{ _('Use public holidays') }}</label>
+        <input
+            type="checkbox"
+            id="use_holidays"
+            name="use_holidays"
+            {% if holiday_setting.use_holidays %}checked{% endif %}
+            style="width: auto;"
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="country_code">{{ _('Holiday country') }}</label>
+        <select id="country_code" name="country_code">
+            {% for code, name in holiday_countries.items() %}
+            <option value="{{ code }}" {% if holiday_setting.country_code == code %}selected{% endif %}>
+                {{ name }} ({{ code }})
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn">{{ _('Save') }}</button>
+</form>
+{% endblock %}
