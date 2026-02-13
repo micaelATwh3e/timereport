@@ -13,12 +13,31 @@ import holidays as holidays_lib
 
 load_dotenv()
 
+def get_available_locales():
+    """Automatically discover available locales from translations folder."""
+    translations_dir = Path(__file__).parent / 'translations'
+    if not translations_dir.exists():
+        return ['en']  # Default to English if translations folder doesn't exist
+    
+    locales = []
+    for item in translations_dir.iterdir():
+        if item.is_dir() and (item / 'LC_MESSAGES').exists():
+            locales.append(item.name)
+    
+    # Ensure we always have at least English as default
+    if not locales:
+        locales = ['en']
+    elif 'en' not in locales:
+        locales.insert(0, 'en')
+    
+    return sorted(locales)
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key-please-change-in-production')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI', 'sqlite:///timetracker.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['BABEL_DEFAULT_LOCALE'] = 'en'
-app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'sv']
+app.config['BABEL_SUPPORTED_LOCALES'] = get_available_locales()
 app.config['BABEL_TRANSLATION_DIRECTORIES'] = 'translations'
 app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=365)

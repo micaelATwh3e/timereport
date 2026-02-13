@@ -4,6 +4,9 @@ This application supports multiple languages using Flask-Babel.
 
 ## Supported Languages
 
+Languages are **automatically discovered** from the `translations/` folder. Simply add a new language folder and it will be available immediately.
+
+Currently available:
 - **English (en)** - Default language
 - **Swedish (sv)**
 
@@ -49,16 +52,30 @@ from flask_babel import gettext
 flash(gettext('User created successfully!'), 'success')
 ```
 
-### 3. Update translation files
+### 3. Extract translatable strings
 
-Add new entries to both `translations/en/LC_MESSAGES/messages.po` and `translations/sv/LC_MESSAGES/messages.po`:
+Extract all marked strings from your application:
+```bash
+pybabel extract -F babel.cfg -o messages.pot .
+```
+
+### 4. Add or update translation files
+
+To update existing translations:
+```bash
+pybabel update -i messages.pot -d translations
+```
+
+### 5. Translate the messages
+
+Edit the `.po` files in `translations/<language>/LC_MESSAGES/messages.po` and add translations:
 
 ```
 msgid "New text to translate"
 msgstr "Translation in target language"
 ```
 
-### 4. Compile translations
+### 6. Compile translations
 
 Compile `.po` files to `.mo` for the application to use:
 ```bash
@@ -66,6 +83,30 @@ pybabel compile -d translations -f
 ```
 
 This command compiles all translation catalogs in the `translations` directory.
+
+## Adding a New Language
+
+**No code changes required!** To add a new language:
+
+1. Create the language folder structure:
+   ```bash
+   pybabel init -i messages.pot -d translations -l <language_code>
+   ```
+   Example for German:
+   ```bash
+   pybabel init -i messages.pot -d translations -l de
+   ```
+
+2. Translate the messages in `translations/<language_code>/LC_MESSAGES/messages.po`
+
+3. Compile the translations:
+   ```bash
+   pybabel compile -d translations
+   ```
+
+4. **Restart the application** - the new language will be automatically detected and available!
+
+The application automatically discovers all languages in the `translations/` folder that have a proper `LC_MESSAGES/` structure.
 
 ## Language Codes
 
